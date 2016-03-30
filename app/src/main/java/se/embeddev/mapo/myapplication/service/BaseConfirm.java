@@ -36,21 +36,23 @@ import android.util.Log;
 
 
 /**
- * BaseConfirm_If
+ * BaseConfirm
  *
  * Base class for confirm service interface
  */
-public class BaseConfirm_If
+public class BaseConfirm
 {
   /** Constants **/
-  private static final String KLogTag = BaseConfirm_If.class.getSimpleName();
+  private static final String KLogTag = BaseConfirm.class.getSimpleName();
 
 
   /** Private Methods **/
   /**
    * Constructor
    */
-  protected BaseConfirm_If() {}
+  protected BaseConfirm()
+  {
+  }
 
 
   /**
@@ -75,7 +77,7 @@ public class BaseConfirm_If
       messenger.send( message );
       Log.d( KLogTag, "Service -> Client: signalId=" + signalId + " response=" + response.toString() );
     }
-    catch (RemoteException e)
+    catch ( RemoteException e )
     {
       Log.w( KLogTag, "Exception while trying to send signalId=" + signalId );
       e.printStackTrace();

@@ -99,7 +99,7 @@ public class ServiceA extends BaseService
       {
         case Request_A_en:
         {
-          ServiceA_Cnf_If.ServiceA_Cnf_If__Confirm_A( message.replyTo, Response_e.Response_Ok_en );
+          ServiceA_Cnf.confirm_A( message.replyTo, Response_e.Response_Ok_en );
           break;
         }
 
@@ -110,13 +110,13 @@ public class ServiceA extends BaseService
                 bundle.getString( Parameters.KKeyParameterA ) + " " +
                 bundle.getString( Parameters.KKeyParameterB ) + " " +
                 bundle.getInt( Parameters.KKeyParameterC ) );
-          ServiceA_Cnf_If.ServiceA_Cnf_If__Confirm_B( message.replyTo, Response_e.Response_Ok_en, "Done", 42 );
+          ServiceA_Cnf.confirm_B( message.replyTo, Response_e.Response_Ok_en, "Done", 42 );
           break;
         }
 
         case Request_Subscribe_Event_C_en:
         {
-          ServiceA_Cnf_If.ServiceA_Cnf_If__Confirm_Subscribe_Event_C( message.replyTo, addSubscriber( message.replyTo ) ? Response_e.Response_Ok_en : Response_e.Response_Error_Already_Exists_en);
+          ServiceA_Cnf.confirmSubscribe_C( message.replyTo, addSubscriber( message.replyTo ) ? Response_e.Response_Ok_en : Response_e.Response_Error_Already_Exists_en );
 
 
           Runnable task = new Runnable()
@@ -132,7 +132,7 @@ public class ServiceA extends BaseService
 
                 public void send(Messenger messenger)
                 {
-                  ServiceA_Cnf_If.ServiceA_Cnf_If__Indication_Event_C(messenger, m_ParamA, m_ParamB, m_ParamC);
+                  ServiceA_Cnf.indication_C( messenger, m_ParamA, m_ParamB, m_ParamC );
                 }
 
 
@@ -167,7 +167,7 @@ public class ServiceA extends BaseService
             response = Response_e.Response_Ok_en;
           }
 
-          ServiceA_Cnf_If.ServiceA_Cnf_If__Confirm_UnSubscribe_Event_C( message.replyTo, response);
+          ServiceA_Cnf.confirmUnSubscribe_C( message.replyTo, response );
           break;
         }
 

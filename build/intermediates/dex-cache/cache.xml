@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/mapo/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.2.1/support-annotations-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="/home/mapo/src/android_service_example/app/build/intermediates/pre-dexed/debug/support-annotations-23.2.1_28148c827eae8e2a8d661b356b766a6afc1199d2.jar" />
+    </item>
+    <item
+        jar="/home/mapo/src/android_service_example/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="/home/mapo/src/android_service_example/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.2.1_4aa5f36ab9eaf945e6f1a2f381d64e69141960a7.jar" />
+    </item>
+    <item
+        jar="/home/mapo/src/android_service_example/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="/home/mapo/src/android_service_example/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.2.1_39810bf948665de47417d0d900ab056120860d80.jar" />
+    </item>
+    <item
+        jar="/home/mapo/src/android_service_example/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="/home/mapo/src/android_service_example/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.2.1_4ebfe6a6839d25ba1850e2e0fe0fcd59a66863d9.jar" />
+    </item>
+    <item
+        jar="/home/mapo/src/android_service_example/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/libs/internal_impl-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="/home/mapo/src/android_service_example/app/build/intermediates/pre-dexed/debug/internal_impl-23.2.1_b0dd91f0bcce0b07c8b42b1de94def30f01bb58a.jar" />
+    </item>
+    <item
+        jar="/home/mapo/src/android_service_example/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="/home/mapo/src/android_service_example/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.2.1_39d8e91b8a657fe435aefe8a790ba0f167180a57.jar" />
+    </item>
+
+</items>

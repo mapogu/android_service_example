@@ -37,8 +37,8 @@ import android.widget.TextView;
 import se.embeddev.mapo.myapplication.service.Parameters;
 import se.embeddev.mapo.myapplication.service.Response_e;
 import se.embeddev.mapo.myapplication.service.Result_e;
-import se.embeddev.mapo.myapplication.service.serviceA.ServiceA_Req_If;
-import se.embeddev.mapo.myapplication.service.serviceB.ServiceB_Req_If;
+import se.embeddev.mapo.myapplication.service.serviceA.ServiceA_Req;
+import se.embeddev.mapo.myapplication.service.serviceB.ServiceB_Req;
 
 
 /**
@@ -46,11 +46,11 @@ import se.embeddev.mapo.myapplication.service.serviceB.ServiceB_Req_If;
  *
  * Application main activity
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ServiceA_Req_If.OnServiceAListener, ServiceB_Req_If.OnServiceBListener
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ServiceA_Req.OnServiceAListener, ServiceB_Req.OnServiceBListener
 {
   /** Private Members **/
-  private ServiceA_Req_If m_ServiceA_Interface;
-  private ServiceB_Req_If m_ServiceB_Interface;
+  private ServiceA_Req m_ServiceA;
+  private ServiceB_Req m_ServiceB;
 
 
   /** Private Methods **/
@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   protected void onStart()
   {
     super.onStart();
-    m_ServiceA_Interface = new ServiceA_Req_If(this);
-    m_ServiceB_Interface = new ServiceB_Req_If(this);
+    m_ServiceA = new ServiceA_Req( this );
+    m_ServiceB = new ServiceB_Req( this );
   }
 
 
@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   @Override
   public void onClick(View view)
   {
-    EditText editText = (EditText)findViewById( R.id.id_st_edit_text_command );
-    TextView textView = (TextView)findViewById( R.id.id_st_label_log);
+    EditText editText = (EditText) findViewById( R.id.id_st_edit_text_command );
+    TextView textView = (TextView) findViewById( R.id.id_st_label_log );
 
     String commandText = editText.getText().toString();
     String logText     = textView.getText().toString();
@@ -140,51 +140,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     else if (commandText.compareTo("1") == 0)
     {
-      result = m_ServiceA_Interface.ServiceA_If__Create( this );
+      result = m_ServiceA.connect( this );
     }
     else if (commandText.compareTo("2") == 0)
     {
-      result = m_ServiceA_Interface.ServiceA_If__Destroy( this );
+      result = m_ServiceA.disconnect( this );
     }
     else if (commandText.compareTo("3") == 0)
     {
-      result = m_ServiceA_Interface.ServiceA_If__Request_A();
+      result = m_ServiceA.request_A();
     }
     else if (commandText.compareTo("4") == 0)
     {
-      result = m_ServiceA_Interface.ServiceA_If__Request_B( "paramA", "paramB", 42 );
+      result = m_ServiceA.request_B( "paramA", "paramB", 42 );
     }
     else if (commandText.compareTo("5") == 0)
     {
-      result = m_ServiceA_Interface.ServiceA_If__Request_Subscribe_Event_C();
+      result = m_ServiceA.subscribe_C();
     }
     else if (commandText.compareTo("6") == 0)
     {
-      result = m_ServiceA_Interface.ServiceA_If__Request_UnSubscribe_Event_C();
+      result = m_ServiceA.unSubscribe_C();
     }
     else if (commandText.compareTo("7") == 0)
     {
-      result = m_ServiceB_Interface.ServiceB_If__Create( this );
+      result = m_ServiceB.connect( this );
     }
     else if (commandText.compareTo("8") == 0)
     {
-      result = m_ServiceB_Interface.ServiceB_If__Destroy( this );
+      result = m_ServiceB.disconnect( this );
     }
     else if (commandText.compareTo("9") == 0)
     {
-      result = m_ServiceB_Interface.ServiceB_If__Request_D();
+      result = m_ServiceB.request_D();
     }
     else if (commandText.compareTo("10") == 0)
     {
-      result = m_ServiceB_Interface.ServiceB_If__Request_E( "paramA", "paramB", 42 );
+      result = m_ServiceB.request_E( "paramA", "paramB", 42 );
     }
     else if (commandText.compareTo("11") == 0)
     {
-      result = m_ServiceB_Interface.ServiceB_If__Request_Subscribe_Event_F();
+      result = m_ServiceB.subscribe_F();
     }
     else if (commandText.compareTo("12") == 0)
     {
-      result = m_ServiceB_Interface.ServiceB_If__Request_UnSubscribe_Event_F();
+      result = m_ServiceB.unSubscribe_F();
     }
     else
     {

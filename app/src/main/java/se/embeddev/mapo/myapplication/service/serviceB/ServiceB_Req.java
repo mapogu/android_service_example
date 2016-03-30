@@ -25,7 +25,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package se.embeddev.mapo.myapplication.service.serviceA;
+package se.embeddev.mapo.myapplication.service.serviceB;
 
 
 import android.content.Context;
@@ -35,21 +35,21 @@ import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
 
-import se.embeddev.mapo.myapplication.service.BaseRequest_If;
+import se.embeddev.mapo.myapplication.service.BaseRequest;
 import se.embeddev.mapo.myapplication.service.Parameters;
 import se.embeddev.mapo.myapplication.service.Response_e;
 import se.embeddev.mapo.myapplication.service.Result_e;
 
 
 /**
- * ServiceA_Req_If
+ * ServiceB_Req
  *
- * Service A Request Interface
+ * Service B Request Interface
  */
-public class ServiceA_Req_If extends BaseRequest_If
+public class ServiceB_Req extends BaseRequest
 {
   /** Constants **/
-  public static final String KLogTag = ServiceA_Req_If.class.getSimpleName();
+  public static final String KLogTag = ServiceB_Req.class.getSimpleName();
 
 
   /**
@@ -57,16 +57,16 @@ public class ServiceA_Req_If extends BaseRequest_If
    *
    * Service Listener Interface
    */
-  public interface OnServiceAListener
+  public interface OnServiceBListener
   {
     /**
      * onServiceResponse
      *
      * Called when confirm signal arrives for a request.
      *
-     * @param signalId service A signal id
-     * @param response service A response code
-     * @param data     service A response data (optional)
+     * @param signalId service B signal id
+     * @param response service B response code
+     * @param data     service B response data (optional)
      */
     void onServiceResponse(Request_e signalId, Response_e response, Bundle data);
 
@@ -76,8 +76,8 @@ public class ServiceA_Req_If extends BaseRequest_If
      *
      * Called when indication arrives
      *
-     * @param signalId service A signal id
-     * @param data     service A indication data (optional)
+     * @param signalId service B signal id
+     * @param data     service B indication data (optional)
      */
     void onServiceIndication(Request_e signalId, Bundle data);
   }
@@ -85,7 +85,7 @@ public class ServiceA_Req_If extends BaseRequest_If
 
   /** Private Members **/
   Messenger          m_Messenger;
-  OnServiceAListener m_Listener;
+  OnServiceBListener m_Listener;
 
 
   /**
@@ -113,20 +113,22 @@ public class ServiceA_Req_If extends BaseRequest_If
 
       switch ( messageType )
       {
-        case Request_UnSubscribe_Event_C_en:
-        case Request_Subscribe_Event_C_en:
-        case Request_B_en:
-        case Request_A_en:
+
+        case Request_UnSubscribe_Event_F_en:
+        case Request_Subscribe_Event_F_en:
+        case Request_D_en:
+        case Request_E_en:
         {
           m_Listener.onServiceResponse( messageType, messageResponse, bundle );
           break;
         }
 
-        case Indication_Event_C_en:
+        case Indication_Event_F_en:
         {
           m_Listener.onServiceIndication( messageType, bundle );
           break;
         }
+
         default:
         {
           Log.w( KLogTag, "Unhandled signalId=" + messageType.toString() );
@@ -143,7 +145,7 @@ public class ServiceA_Req_If extends BaseRequest_If
    *
    * @param listener reference to OnServiceAListener
    */
-  public ServiceA_Req_If(OnServiceAListener listener)
+  public ServiceB_Req(OnServiceBListener listener)
   {
     super(KLogTag);
     m_Listener  = listener;
@@ -153,21 +155,21 @@ public class ServiceA_Req_If extends BaseRequest_If
 
   /** Service Request Interface **/
   /**
-   * ServiceA_If__Create
+   * connect
    *
    * Connects to service
    *
    * @param context reference to Context
    * @return returns Result_Ok_en if connection attempt successful, error code otherwise
    */
-  public Result_e ServiceA_If__Create(Context context)
+  public Result_e connect(Context context)
   {
-    return connectToService( context, ServiceA.class );
+    return connectToService( context, ServiceB.class );
   }
 
 
   /**
-   * ServiceA_If__Destroy
+   * disconnect
    *
    * Disconnects from service
    * Service might live longer if there are more than one client
@@ -175,68 +177,68 @@ public class ServiceA_Req_If extends BaseRequest_If
    * @param context reference to Context
    * @return returns Result_Ok_en if disconnect attempt successful, error code otherwise
    */
-  public Result_e ServiceA_If__Destroy(Context context)
+  public Result_e disconnect(Context context)
   {
     return disconnectFromService( context );
   }
 
 
   /**
-   * ServiceA_If__Request_A
+   * request_D
    *
-   * Sends Request_A_en to service
+   * Sends Request_D_en to service
    *
    * @return returns Result_Ok_en if successfully sent, error code otherwise
    */
-  public Result_e ServiceA_If__Request_A()
+  public Result_e request_D()
   {
-    return sendToServiceIfPossible( Request_e.Request_A_en.valueOf(), null, m_Messenger );
+    return sendToServiceIfPossible( Request_e.Request_D_en.valueOf(), null, m_Messenger );
   }
 
 
   /**
-   * ServiceA_If__Request_B
+   * request_E
    *
-   * Sends Request_B_en to service
+   * Sends Request_E_en to service
    *
    * @param paramA String parameter A
    * @param paramB String parameter B
    * @param paramC Integer parameter C
    * @return returns Result_Ok_en if successfully sent, error code otherwise
    */
-  public Result_e ServiceA_If__Request_B(String paramA, String paramB, int paramC)
+  public Result_e request_E(String paramA, String paramB, int paramC)
   {
     Bundle bundle = new Bundle();
     bundle.putString( Parameters.KKeyParameterA, paramA);
     bundle.putString(Parameters.KKeyParameterB, paramB);
     bundle.putInt( Parameters.KKeyParameterC, paramC );
-    return sendToServiceIfPossible( Request_e.Request_B_en.valueOf(), bundle, m_Messenger );
+    return sendToServiceIfPossible( Request_e.Request_E_en.valueOf(), bundle, m_Messenger );
   }
 
 
   /**
-   * ServiceA_If__Request_Subscribe_Event_C
+   * subscribe_F
    *
-   * Sends subscribe request for event C
+   * Sends subscribe request for event F
    *
    * @return returns Result_Ok_en if successfully sent, error code otherwise
    */
-  public Result_e ServiceA_If__Request_Subscribe_Event_C()
+  public Result_e subscribe_F()
   {
-    return sendToServiceIfPossible( Request_e.Request_Subscribe_Event_C_en.valueOf(), null, m_Messenger );
+    return sendToServiceIfPossible( Request_e.Request_Subscribe_Event_F_en.valueOf(), null, m_Messenger );
   }
 
 
   /**
-   * ServiceA_If__Request_UnSubscribe_Event_C
+   * unSubscribe_F
    *
-   * Sends UnSubscribe request for event C
+   * Sends UnSubscribe request for event F
    *
    * @return returns Result_Ok_en if successfully sent, error code otherwise
    */
-  public Result_e ServiceA_If__Request_UnSubscribe_Event_C()
+  public Result_e unSubscribe_F()
   {
-    return sendToServiceIfPossible( Request_e.Request_UnSubscribe_Event_C_en.valueOf(), null, m_Messenger );
+    return sendToServiceIfPossible( Request_e.Request_UnSubscribe_Event_F_en.valueOf(), null, m_Messenger );
   }
 
 

@@ -25,101 +25,101 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package se.embeddev.mapo.myapplication.service.serviceB;
+package se.embeddev.mapo.myapplication.service.serviceA;
 
 
 import android.os.Bundle;
 import android.os.Messenger;
 
-import se.embeddev.mapo.myapplication.service.BaseConfirm_If;
+import se.embeddev.mapo.myapplication.service.BaseConfirm;
 import se.embeddev.mapo.myapplication.service.Parameters;
 import se.embeddev.mapo.myapplication.service.Response_e;
 
 
 /**
- * ServiceB_Cnf_If
+ * ServiceA_Cnf
  *
- * Service B Confirm Interface
+ * Service A Confirm Interface
  */
-public class ServiceB_Cnf_If extends BaseConfirm_If
+ public class ServiceA_Cnf extends BaseConfirm
 {
   /**
-   * ServiceB_Cnf_If__Confirm_D
+   * confirm_A
    *
-   * Sends confirm signal for Request_D_en
+   * Sends confirm signal for Request_A_en
    *
    * @param messenger reference to Messenger (client)
    * @param response  service response code
    */
-  static void ServiceB_Cnf_If__Confirm_D(Messenger messenger, Response_e response)
+  static void confirm_A(Messenger messenger, Response_e response)
   {
-    sendToClient(messenger, Request_e.Request_D_en.valueOf(), response, null);
+    sendToClient(messenger, Request_e.Request_A_en.valueOf(), response, null);
   }
 
 
   /**
-   *  ServiceB_Cnf_If__Confirm_E
+   *  confirm_B
    *
-   *  Sends confirm signal for Request_E_en
+   *  Sends confirm signal for Request_B_en
    *
    * @param messenger reference to Messenger (client)
    * @param response service response code
    * @param paramA String containing response data
    * @param paramB Integer containing response data
    */
-  static void ServiceB_Cnf_If__Confirm_E(Messenger messenger, Response_e response, String paramA, int paramB)
+  static void confirm_B(Messenger messenger, Response_e response, String paramA, int paramB)
   {
     Bundle bundle = new Bundle();
     bundle.putString( Parameters.KKeyParameterA, paramA);
     bundle.putInt( Parameters.KKeyParameterB, paramB );
-    sendToClient( messenger, Request_e.Request_E_en.valueOf(), response, bundle );
+    sendToClient( messenger, Request_e.Request_B_en.valueOf(), response, bundle );
   }
 
 
   /**
-   * ServiceB_Cnf_If__Confirm_Subscribe_Event_F
+   * confirmSubscribe_C
    *
-   * Sends confirm signal for subscription to event F
+   * Sends confirm signal for subscription to event C
    *
    * @param messenger reference to Messenger (client)
    * @param response service response code
    */
-  static void ServiceB_Cnf_If__Confirm_Subscribe_Event_F(Messenger messenger, Response_e response)
+  static void confirmSubscribe_C(Messenger messenger, Response_e response)
   {
-    sendToClient( messenger, Request_e.Request_Subscribe_Event_F_en.valueOf(), response, null );
+    sendToClient( messenger, Request_e.Request_Subscribe_Event_C_en.valueOf(), response, null );
   }
 
 
   /**
-   * ServiceB_Cnf_If__Confirm_UnSubscribe_Event_F
+   * confirmUnSubscribe_C
    *
-   * Sends confirm signal for UnSubscription to event F
+   * Sends confirm signal for UnSubscription to event C
    *
    * @param messenger reference to Messenger (client)
    * @param response service response code
    */
-  static void ServiceB_Cnf_If__Confirm_UnSubscribe_Event_F(Messenger messenger, Response_e response)
+  static void confirmUnSubscribe_C(Messenger messenger, Response_e response)
   {
-    sendToClient( messenger, Request_e.Request_UnSubscribe_Event_F_en.valueOf(), response, null );
+    sendToClient( messenger, Request_e.Request_UnSubscribe_Event_C_en.valueOf(), response, null );
   }
 
 
   /**
-   * ServiceB_Cnf_If__Indication_Event_F
+   * indication_C
    *
-   * Sends indication to client for event F
+   * Sends indication to client for event C
    *
    * @param messenger reference to Messenger (client)
    * @param paramA String indication data
    * @param paramB String indication data
    * @param paramC Integer indication data
    */
-  static void ServiceB_Cnf_If__Indication_Event_F(Messenger messenger, String paramA, String paramB, int paramC)
+  static void indication_C(Messenger messenger, String paramA, String paramB, int paramC)
   {
     Bundle bundle = new Bundle();
     bundle.putString(Parameters.KKeyParameterA, paramA);
     bundle.putString(Parameters.KKeyParameterB, paramB );
     bundle.putInt( Parameters.KKeyParameterC, paramC);
-    sendToClient( messenger, Request_e.Indication_Event_F_en.valueOf(), Response_e.Response_Ok_en, bundle );
+    sendToClient( messenger, Request_e.Indication_Event_C_en.valueOf(), Response_e.Response_Ok_en, bundle );
   }
 }

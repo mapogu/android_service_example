@@ -41,13 +41,13 @@ import android.util.Log;
 
 
 /**
- * BaseRequest_If
+ * BaseRequest
  *
  * Service Request Interface base class
  * Handles service connection and provides
  * signal send interface
  */
-public abstract class BaseRequest_If implements ServiceConnection
+public abstract class BaseRequest implements ServiceConnection
 {
   /** Private Members **/
   private   String    m_Tag;
@@ -62,7 +62,7 @@ public abstract class BaseRequest_If implements ServiceConnection
    *
    * @param tag Log tag to use
    */
-  public BaseRequest_If(String tag)
+  public BaseRequest(String tag)
   {
     m_Tag = tag;
     m_ServiceRequested = false;

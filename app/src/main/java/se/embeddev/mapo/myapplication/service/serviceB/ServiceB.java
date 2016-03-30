@@ -43,7 +43,7 @@ import java.util.concurrent.TimeUnit;
 import se.embeddev.mapo.myapplication.service.BaseService;
 import se.embeddev.mapo.myapplication.service.Parameters;
 import se.embeddev.mapo.myapplication.service.Response_e;
-import se.embeddev.mapo.myapplication.service.serviceA.ServiceA_Req_If;
+import se.embeddev.mapo.myapplication.service.serviceA.ServiceA_Req;
 
 
 /**
@@ -51,7 +51,7 @@ import se.embeddev.mapo.myapplication.service.serviceA.ServiceA_Req_If;
  *
  * Handles requests from client and processes them
  */
-public class ServiceB extends BaseService implements ServiceA_Req_If.OnServiceAListener
+public class ServiceB extends BaseService implements ServiceA_Req.OnServiceAListener
 {
   /** Constants **/
   private static final String KLogTag = ServiceB.class.getSimpleName();
@@ -60,8 +60,7 @@ public class ServiceB extends BaseService implements ServiceA_Req_If.OnServiceAL
   /** Private Members **/
   ScheduledThreadPoolExecutor m_Executor;
   Vector<ScheduledFuture<?>>  m_ScheduledTasks;
-  ServiceA_Req_If             m_ServiceA_Interface;
-
+  ServiceA_Req                m_ServiceA;
 
   /** Private Classes **/
   /**
@@ -93,41 +92,43 @@ public class ServiceB extends BaseService implements ServiceA_Req_If.OnServiceAL
     public void handleMessage(Message message)
     {
       Request_e signalId = Request_e.fromInt( message.what );
-      Bundle bundle   = message.peekData();
+      Bundle    bundle   = message.peekData();
 
       Log.d( KLogTag, "handleMessage: signalId=" + signalId.toString() );
 
       switch ( signalId )
       {
-        case Request_D_en:_en:
-        {
-          ServiceB_Cnf_If.ServiceB_Cnf_If__Confirm_D( message.replyTo, Response_e.Response_Ok_en );
-          m_ServiceA_Interface.ServiceA_If__Request_Subscribe_Event_C();
-          break;
-        }
+        case Request_D_en:
+          _en:
+          {
+            ServiceB_Cnf.confirm_D( message.replyTo, Response_e.Response_Ok_en );
+            m_ServiceA.subscribe_C();
+            break;
+          }
 
         case Request_E_en:
         {
-          ServiceB_Cnf_If.ServiceB_Cnf_If__Confirm_E( message.replyTo, Response_e.Response_Ok_en, "paramA", 42 );
+          ServiceB_Cnf.confirm_E( message.replyTo, Response_e.Response_Ok_en, "paramA", 42 );
 
           Log.d( KLogTag, signalId.toString() + " " +
                           bundle.getString( Parameters.KKeyParameterA ) + " " +
                           bundle.getString( Parameters.KKeyParameterB ) + " " +
                           bundle.getInt( Parameters.KKeyParameterC ) );
 
-          m_ServiceA_Interface.ServiceA_If__Request_UnSubscribe_Event_C();
+          m_ServiceA.unSubscribe_C();
           break;
         }
 
         case Request_Subscribe_Event_F_en:
         {
-          ServiceB_Cnf_If.ServiceB_Cnf_If__Confirm_Subscribe_Event_F( message.replyTo, addSubscriber( message.replyTo ) ? Response_e.Response_Ok_en : Response_e.Response_Error_Already_Exists_en );
+          ServiceB_Cnf.confirmSubscribe_F( message.replyTo, addSubscriber( message.replyTo ) ? Response_e.Response_Ok_en : Response_e.Response_Error_Already_Exists_en );
 
 
           Runnable task = new Runnable()
           {
             @Override
-            public void run() {
+            public void run()
+            {
               BaseService.OnSend sender = new BaseService.OnSend()
               {
                 String m_ParamA;
@@ -137,7 +138,7 @@ public class ServiceB extends BaseService implements ServiceA_Req_If.OnServiceAL
 
                 public void send(Messenger messenger)
                 {
-                  ServiceB_Cnf_If.ServiceB_Cnf_If__Indication_Event_F( messenger, m_ParamA, m_ParamB, m_ParamC );
+                  ServiceB_Cnf.indication_F( messenger, m_ParamA, m_ParamB, m_ParamC );
                 }
 
 
@@ -172,7 +173,7 @@ public class ServiceB extends BaseService implements ServiceA_Req_If.OnServiceAL
             response = Response_e.Response_Ok_en;
           }
 
-          ServiceB_Cnf_If.ServiceB_Cnf_If__Confirm_UnSubscribe_Event_F( message.replyTo, response );
+          ServiceB_Cnf.confirmUnSubscribe_F( message.replyTo, response );
           break;
         }
 
@@ -205,7 +206,7 @@ public class ServiceB extends BaseService implements ServiceA_Req_If.OnServiceAL
   @Override
   public void onDestroy()
   {
-    m_ServiceA_Interface.ServiceA_If__Destroy( this );
+    m_ServiceA.disconnect( this );
 
     clearAllScheduledTasks();
 
@@ -254,8 +255,8 @@ public class ServiceB extends BaseService implements ServiceA_Req_If.OnServiceAL
    */
   protected Handler onCreate(Looper looper)
   {
-    m_ServiceA_Interface = new ServiceA_Req_If( this );
-    m_ServiceA_Interface.ServiceA_If__Create( this );
+    m_ServiceA = new ServiceA_Req( this );
+    m_ServiceA.connect( this );
 
     return new SignalHandler( looper );
   }

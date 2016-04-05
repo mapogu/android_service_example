@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             "* 7  - Start Service B\n" +
             "* 8  - Stop Service B\n" +
             "* 9  - Send Request D to Service B\n" +
-            "* 10 - Send Request E tp Service B\n" +
+            "* 10 - Send Request E to Service B\n" +
             "* 11 - Subscribe to Event F from Service B\n" +
             "* 12 - UnSubscribe to Event F from Service B\n";
     }
